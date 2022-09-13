@@ -1,0 +1,4 @@
+<%= form_with model: @attendee, url: event_attendee_path(@event, @attendee),method: :patch  do |f| %>
+  <%= f.text_field :name %>
+  <%= f.submit %>
+<% end %>

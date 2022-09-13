@@ -1,0 +1,29 @@
+<%= form_tag events_path, :method => :get do %>
+  <%= text_field_tag "keyword" %>
+  <%= submit_tag "Search" %>
+<% end %>
+<%= link_to 'Sort by Name', events_path( order: "name") %>
+<%= link_to 'Sort by Default', events_path %>
+
+<%= form_tag bulk_update_events_path do %>
+  <ul>
+    <% @events.each do |event| %>
+      <li>
+        <%= check_box_tag "ids[]", event.id, false %>
+        <%= event.name %>
+        <%= link_to 'Show',event_path(event)  %>
+        <%= link_to 'Edit', edit_event_path(event) %>
+        <%= link_to 'Delete',event_path(event), method: :delete %>
+        <%= link_to 'attendees', event_attendees_path(event) %>
+        <%= link_to 'location', event_location_path(event) %>
+        <%= link_to 'Dashboard', dashboard_event_path(event) %>
+      </li>
+    <% end %>
+  </ul>
+  <div class="field">
+    <%= link_to 'New Event', new_event_path  %>
+  </div>
+  <%= submit_tag "Delete" %>
+  <%= submit_tag "Publish" %>
+  <%= button_to "Delete All", bulk_delete_events_path, method: :post %>
+<% end %>

@@ -1,0 +1,13 @@
+<h1><%= @event.name %>'s Dashboard</h1>
+<hr>
+<ul>
+  <li>有<%= @event.attendees.count %>人與會</li>
+  <li>參加<%= @event.groups.count %>group</li>
+</ul>
+
+<% membership = Membership.find_by( :event => @event, :user => current_user ) %>
+<% if membership%>
+  <%= button_to "Withdraw", event_membership_path(@event, membership), method: :delete %>
+<% else %>
+  <%= button_to "Join", event_memberships_path(@event) %>
+<% end %>

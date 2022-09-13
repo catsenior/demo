@@ -1,0 +1,42 @@
+<%= form_with model: event, local: true do |f| %>
+    <div class="field">
+      <%= f.label :name, "Name" %>
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label :description, "Description" %>
+      <%= f.text_area :description %>
+    </div>
+    <div class="field">
+      <%= f.collection_select(:category_id, Category.all, :id, :name) %> 
+    </div>
+
+    <div>
+      <%= f.fields_for :location do |location_form| %>
+        <p>
+          <%= location_form.label :name, "Location Name" %>
+          <%= location_form.text_field :name %>
+
+          <% unless location_form.object.new_record? %>
+              <%= location_form.label :_destroy, 'Remove:' %>
+              <%= location_form.check_box :_destroy %>
+          <% end %>
+        </p>
+      <% end %>
+    </div>
+
+    <div class="field">
+      <%= f.collection_check_boxes(:group_ids, Group.all, :id, :name) %>
+    </div>
+    <div>
+      <%= f.submit %>
+    </div>
+<% end %>
+
+<% if @event.errors.any? %>
+  <ul>
+    <% @event.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
